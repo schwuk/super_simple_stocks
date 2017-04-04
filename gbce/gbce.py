@@ -76,7 +76,8 @@ class GBCE(Cmd):
 
     def do_stock(self, symbol):
         """List a single stock. E.g., stock TEA"""
-        stock = get_stock(self.stocks, symbol)
+        _symbol = get_symbol_input(symbol)
+        stock = get_stock(self.stocks, _symbol)
         if stock:
             print(tabulate([self._prepare_stock_for_display(stock)],
                            headers="keys"))
