@@ -48,6 +48,14 @@ class GBCE(Cmd):
     stocks = []
     trades = []
 
+    def _prepare_stock_for_display(self, stock):
+        """Prepares an individual stock for display."""
+        _stock = stock.__dict__
+        _stock['stock_price'] = stock.get_stock_price(self.trades)
+        _stock['yield'] = stock.get_dividend_yield()
+        _stock['pe_ratio'] = stock.get_pe_ratio()
+        return _stock
+
     def do_seed_stocks(self, args):
         """Populate with sample stocks."""
         for stock in (TEA, POP, ALE, GIN, JOE):
@@ -63,18 +71,15 @@ class GBCE(Cmd):
         """List all stocks."""
         _stocks = []
         for stock in self.stocks:
-            _stock = stock.__dict__
-            _stock['stock_price'] = stock.get_stock_price(self.trades)
-            _stock['yield'] = stock.get_dividend_yield()
-            _stock['pe_ratio'] = stock.get_pe_ratio()
-            _stocks.append(_stock)
+            _stocks.append(self._prepare_stock_for_display(stock))
         print(tabulate(_stocks, headers="keys"))
 
     def do_stock(self, symbol):
         """List a single stock. E.g., stock TEA"""
         stock = get_stock(self.stocks, symbol)
         if stock:
-            print(tabulate([stock.__dict__], headers="keys"))
+            print(tabulate([self._prepare_stock_for_display(stock)],
+                           headers="keys"))
         else:
             print("Stock %s not found" % symbol)
 
