@@ -1,3 +1,4 @@
+"""User interface for the GBCE stock market."""
 from cmd import Cmd
 
 from tabulate import tabulate
@@ -9,12 +10,14 @@ from simple_stocks.sample_data import TEA, POP, ALE, GIN, JOE
 
 
 def get_symbol_input(symbol=""):
+    """Get (from the user) and/or validate a stock symbol."""
     message = "Stock symbol (three letters): "
     regex = r'^[A-Za-z]{3}$'
     return get_valid_text_input(message, regex, symbol).upper()
 
 
 def get_valid_text_input(message, regex, text=""):
+    """Get (from the user) and/or validate a text value."""
     while len(text) == 0:
         text = input(message)
         import re
@@ -24,6 +27,7 @@ def get_valid_text_input(message, regex, text=""):
 
 
 def get_choice_input(message, valid_choices):
+    """ Get (from the user) and validate an (integer) choice."""
     choice = -1
     while choice not in valid_choices:
         try:
@@ -34,6 +38,7 @@ def get_choice_input(message, valid_choices):
 
 
 def get_float_input(message):
+    """ Get (from the user) and validate an float value."""
     value = -1.0
     while value < 0:
         try:
@@ -44,6 +49,7 @@ def get_float_input(message):
 
 
 class GBCE(Cmd):
+    """GBCE stock market."""
 
     stocks = []
     trades = []
