@@ -54,7 +54,7 @@ class Stock(object):
         """Get the dividend yield for this stock."""
         try:
             if self.stock_type == PREFERRED:
-                _yield = (self.fixed_dividend * self.par_value) /\
+                _yield = ((self.fixed_dividend / 100) * self.par_value) /\
                     self.ticker_price
             else:
                 _yield = self.last_dividend / self.ticker_price

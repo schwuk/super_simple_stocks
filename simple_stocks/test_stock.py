@@ -36,7 +36,7 @@ class TestStock(unittest.TestCase):
         self.assertEqual(stock.get_dividend_yield(), expected_yield)
 
     def test_get_dividend_yield_preferred(self):
-        expected_yield = 0.2  # (0.02) / 10
+        expected_yield = 0.2  # ((2/100) * 100) / 10
         stock = GIN
         stock.ticker_price = 10
         self.assertEqual(stock.get_dividend_yield(), expected_yield)
